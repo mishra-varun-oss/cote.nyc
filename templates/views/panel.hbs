@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>Panel</title>
+		<link rel="stylesheet" href="/css/panel.css">
+	</head>
+	<body>
+		<p>Landing Page Control Panel</p>
+		<a href="/logout">Logout</a>
+		<button id="add_slide_button">Add Slide</button>
+
+		<button onclick="get_data()">Get Data</button>
+		<div id="add_slide_modal" class="modal">
+			<div class="modal_content">
+				<span class="close" id="closeModalBtn">&times;</span>
+				<p>Add slide</p>
+				<label for="left_image">Left Image</label>
+				<input type="file" id="left_image" name="left">
+				<br>
+				<label for="right_image">Right Image</label>
+				<input type="file" id="right_image" name="right">
+				<br>
+				<input type="text" placeholder="Slide Color Hex Code" id="add_slide_color">
+				<br>
+				<button onclick="add_slide()">Add</button>
+			</div>
+		</div>
+		<script src="/js/panel.js"></script>
+	</body>
+</html>

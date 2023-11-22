@@ -29,6 +29,10 @@ app.use('/panel', panel);
 app.get('/', (req, res) => {
 	res.render('index');
 })
+app.get('/logout', (req, res) => {
+	req.session.destroy();
+	res.redirect('/login?logout=true');
+})
 
 app.listen(port, () => {
 	console.log(`cote.nyc is up on port ${port}!`);
