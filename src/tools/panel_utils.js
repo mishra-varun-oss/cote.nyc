@@ -11,21 +11,20 @@ module.exports.group_slides = (images) => {
 			images.forEach((image) => {
 				let image_obj = {
 					id: image.image_id,
-					side: image.side,
-					slide_color: image.slide_color
+					side: image.side
 				}
 				if (slides.length > 0) {
 					slides.forEach((slide) => {
 						if (slide.slide_no == image.slide_no) {
 							slide.images.push(image_obj);
 						} else {
-							let slide_obj = { slide_no: image.slide_no, images: [] }
+							let slide_obj = { slide_no: image.slide_no, slide_color: image.slide_color, images: [] }
 							slide_obj.images.push(image_obj);
 							slides.push(slide_obj);
 						}
 					})
 				} else {
-					let slide_obj = { slide_no: image.slide_no, images: [] }
+					let slide_obj = { slide_no: image.slide_no, slide_color: image.slide_color, images: [] }
 					slide_obj.images.push(image_obj);
 					slides.push(slide_obj);
 				}

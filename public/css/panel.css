@@ -1,6 +1,33 @@
 body {
+	margin: 0;
 }
 
+.header {
+	display: flex;
+	padding: 10px 10px 0px 10px;
+}
+.header .header-main {
+	width: 50%;
+	display: flex;
+	justify-content: flex-start;
+	gap: 10px;
+}
+.header .header-minor {
+	width: 50%;
+	display: flex;
+	justify-content: flex-end;
+}
+.header p {
+	margin: 0px;
+}
+.header a {
+	text-decoration: none;
+	color: black;
+	cursor: pointer;
+}
+.container {
+	margin: 0px 10px;
+}
 .modal {
   display: none;
   position: fixed;
@@ -25,4 +52,18 @@ body {
   font-size: 20px;
   cursor: pointer;
 }
+.slide-div {
+	margin: 10px 0;
 
+}
+.slide-div p {
+	margin: 10px 0 0 0;
+}
+.image-div {
+	display: flex;
+	flex-direction: row;
+	gap: 10px;
+}
+.image-div img {
+	width: 150px;
+}
