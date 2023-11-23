@@ -39,37 +39,6 @@ module.exports.group_slides = (images) => {
 					}
 				})
 			})
-/*
-			images.forEach((image) => {
-				let image_obj = {
-					id: image.image_id,
-					side: image.side
-				}
-				console.log(image);
-				if (slides.length > 0) {
-					for (let i = 0; i < slides.length; i++) {
-						let slide = slides[i];
-						if (slide.images.length == 2) {
-							console.log(slide);
-							continue;
-						} else {
-							if (slide.slide_no == image.slide_no) {
-								slide.images.push(image_obj);
-							} else {
-								let slide_obj = { slide_no: image.slide_no, slide_color: image.slide_color, images: [] }
-								slide_obj.images.push(image_obj);
-								slides.push(slide_obj);
-							}
-						}
-					}
-				} else {
-					let slide_obj = { slide_no: image.slide_no, slide_color: image.slide_color, images: [] }
-					slide_obj.images.push(image_obj);
-					slides.push(slide_obj);
-				}
-			})
-			
-*/
 		} else {
 			reject("Length must be greater than 0");
 		}
