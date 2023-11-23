@@ -25,6 +25,7 @@ function get_all_slides() {
 	.then((data) => {
 		let left_div = document.querySelector("#left-slide");
 		let right_div = document.querySelector("#right-slide");
+		console.log(data.data);
 		data.data.forEach((slide) => {
 			slide.images.forEach((image) => {
 				let image_div = document.createElement('div');

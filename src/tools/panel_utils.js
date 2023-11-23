@@ -8,28 +8,68 @@ module.exports.group_slides = (images) => {
 	return new Promise((resolve, reject) => {
 		if (images.length > 0) {
 			let slides = [];
+			let q = `SELECT DISTINCT slide_no, slide_color FROM images`;
+			db.query(q, (err, results) => {
+				if (err) {
+					reject(err);
+					return;
+				}
+				console.log(results);
+				let count = 0;
+				results.forEach((result) => {
+					let slide_obj = {
+						slide_no: result.slide_no,
+						slide_color: result.slide_color,
+						images: []
+					}
+					images.forEach((image) => {
+						let image_obj = {
+							id: image.image_id,
+							side: image.side
+						}
+						if (image.slide_no == result.slide_no) {
+							count++;
+							slide_obj.images.push(image_obj);
+						}
+					})
+					
+					slides.push(slide_obj);
+					if (count == images.length) {
+						resolve(slides);
+					}
+				})
+			})
+/*
 			images.forEach((image) => {
 				let image_obj = {
 					id: image.image_id,
 					side: image.side
 				}
+				console.log(image);
 				if (slides.length > 0) {
-					slides.forEach((slide) => {
-						if (slide.slide_no == image.slide_no) {
-							slide.images.push(image_obj);
+					for (let i = 0; i < slides.length; i++) {
+						let slide = slides[i];
+						if (slide.images.length == 2) {
+							console.log(slide);
+							continue;
 						} else {
-							let slide_obj = { slide_no: image.slide_no, slide_color: image.slide_color, images: [] }
-							slide_obj.images.push(image_obj);
-							slides.push(slide_obj);
+							if (slide.slide_no == image.slide_no) {
+								slide.images.push(image_obj);
+							} else {
+								let slide_obj = { slide_no: image.slide_no, slide_color: image.slide_color, images: [] }
+								slide_obj.images.push(image_obj);
+								slides.push(slide_obj);
+							}
 						}
-					})
+					}
 				} else {
 					let slide_obj = { slide_no: image.slide_no, slide_color: image.slide_color, images: [] }
 					slide_obj.images.push(image_obj);
 					slides.push(slide_obj);
 				}
 			})
-			resolve(slides)
+			
+*/
 		} else {
 			reject("Length must be greater than 0");
 		}
