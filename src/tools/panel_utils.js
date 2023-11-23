@@ -103,3 +103,30 @@ module.exports.resize_image = (image_path, image_id) => {
 		})
 	})
 }
+
+module.exports.clear_directory = (output_directory) => {
+	return new Promise ((resolve, reject) => {
+		fs.readdir(output_directory, (err, files) => {
+			if (err) {
+				reject(err);
+				return;
+			} 
+
+			let count = 0;
+			files.forEach((file) => {
+				const file_path = path.join(output_directory, file);
+				fs.unlink(file_path, (err) => {
+					if (err) {
+						reject(err);
+						return;
+					} 
+					
+					count++;
+					if (count == files.length) {
+						resolve('Done!');
+					}
+				})
+			})
+		})
+	})
+}

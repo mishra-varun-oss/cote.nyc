@@ -36,7 +36,8 @@ function get_srcset(id) {
 	let widths = [350, 430, 500, 650, 800, 1100];
 	let srcset_strings = [];
 	widths.forEach((width) => {
-		let src = `/images/${id}/${id}_${width} ${width}w`;
+		let random_number = Math.random();
+		let src = `/images/${id}/${id}_${width}?refresh=${random_number} ${width}w`;
 		srcset_strings.push(src);
 	})
 	return srcset_strings;
@@ -61,6 +62,21 @@ function update_color(slide_no, element) {
 	})
 }
 
+function replace_img(id) {
+	let file_input = document.querySelector(`#id_${id}`);
+	let form_data = new FormData();
+	form_data.append('file', file_input.files[0]);
+	form_data.append('id', id);
+	fetch('/panel/replace_image', {
+		method: 'POST',
+		body: form_data
+	})
+	.then((response) => response.json())
+	.then((data) => {
+		get_slide_data();
+	})
+}
+
 function get_slide_data() {
 	let slide_container = document.querySelector("#slide_container");
 	fetch('/panel/get_slide_data')
@@ -77,11 +93,27 @@ function get_slide_data() {
 			slide_images.classList.add('image-div');
 
 			slide.images.forEach((image) => {
+				let indiv_img_div = document.createElement('div');
 				let img = document.createElement('img');
+				let replace_img_div = document.createElement('div');
+
+				let file_input = document.createElement('input');
+				let replace_btn = document.createElement('button');
+				file_input.type = 'file';
+				file_input.id = `id_${image.id}`;
+				replace_btn.textContent = 'Upload';
+				replace_btn.addEventListener('click', (e) => { replace_img(image.id) });
+				replace_img_div.appendChild(file_input);
+				replace_img_div.appendChild(replace_btn);
+
 				img.setAttribute('srcset', get_srcset(image.id).join(', '));
 				img.setAttribute('sizes', get_sizes().join(', '));
-				img.classList.add(`image-${image.side}`);
-				slide_images.appendChild(img);
+				img.id = `img_${image.id}`;
+
+				indiv_img_div.classList.add(`image-${image.side}`);
+				indiv_img_div.appendChild(img);
+				indiv_img_div.appendChild(replace_img_div);
+				slide_images.appendChild(indiv_img_div);
 			})
 
 			let slide_color_input = document.createElement('input');

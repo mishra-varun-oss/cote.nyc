@@ -1,21 +1,50 @@
+@font-face {
+	font-family: 'Yantramanav-Regular';
+	src: url('/fonts/Yantramanav-Regular.ttf') format('truetype');
+}
+@media only screen and (max-width: 400px) {
+	.image-div {
+		flex-direction: column !important;
+	}
+}
+html, body {
+	height: 100%;
+}
 body {
 	margin: 0;
+	font-family: 'Yantramanav-Regular';
 }
 
 .header {
 	display: flex;
-	padding: 10px 10px 0px 10px;
+	padding: 10px 10px;
+	background-color: #bcbdc2;
 }
 .header .header-main {
-	width: 50%;
+	width: 40%;
 	display: flex;
 	justify-content: flex-start;
-	gap: 10px;
+	align-content: center;
+}
+.header .header-main p {
+	font-size: 20px;
+	font-weight: bold;
+}
+.header .header-minor button {
+	color: black;
+	background-color: white;
+	border-radius: 5px;
+	border: none;
+	padding: 0px 5px;
+	font-family: 'Yantramanav-Regular';
+	font-size: 20px;
 }
 .header .header-minor {
-	width: 50%;
+	gap: 10px;
+	width: 60%;
 	display: flex;
 	justify-content: flex-end;
+	font-size: 20px;
 }
 .header p {
 	margin: 0px;
@@ -54,7 +83,6 @@ body {
 }
 .slide-div {
 	margin: 10px 0;
-
 }
 .slide-div p {
 	margin: 10px 0 0 0;
@@ -66,4 +94,7 @@ body {
 }
 .image-div img {
 	width: 150px;
+}
+.image-div .image-left {
+	order: -1;
 }

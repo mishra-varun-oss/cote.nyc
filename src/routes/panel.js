@@ -20,7 +20,7 @@ router.get('/', (req, res) => {
 	res.render('panel', { username: req.session.username });
 })
 
-router.post('/create_slide', upload.single('file'), async (req, res) => {
+router.post('/create_slide', upload.single('file'), (req, res) => {
 	let image_path = path.join(__dirname, `../../public/images/${req.file.originalname}`);
 	let image_id = utils.generate_string(7);
 	let output_directory = path.join(__dirname, `../../public/images/${image_id}`);
@@ -40,6 +40,24 @@ router.post('/create_slide', upload.single('file'), async (req, res) => {
 						res.send({ success: true })
 					})
 				})
+			})
+		})
+	})
+})
+
+router.post('/replace_image', upload.single('file'), (req, res) => {
+	let image_path = path.join(__dirname, `../../public/images/${req.file.originalname}`);
+	let image_id = req.body.id;
+	let output_directory = path.join(__dirname, `../../public/images/${image_id}`);
+	let output_image_path = path.join(__dirname, `../../public/images/${image_id}/${image_id}_original`);
+	
+	utils.clear_directory(output_directory)
+	.then((result) => {
+		fs.rename(image_path, output_image_path, (err) => {
+			if (err) throw err;
+			utils.resize_image(output_image_path, image_id)
+			.then((result) => {
+				res.send({ success: true, id: image_id })
 			})
 		})
 	})

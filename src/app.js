@@ -12,6 +12,7 @@ const views_directory = path.join(__dirname, "../templates/views");
 
 const panel = require(path.join(__dirname, "./routes/panel.js"));
 const login = require(path.join(__dirname, "./routes/login.js"));
+const get_data = require(path.join(__dirname, "./routes/get_data.js"));
 
 app.set('view engine', '.hbs');
 app.set('views', views_directory);
@@ -26,6 +27,7 @@ app.use(session({
 
 app.use('/login', login);
 app.use('/panel', panel);
+app.use('/get', get_data);
 app.get('/', (req, res) => {
 	res.render('index');
 })

@@ -40,14 +40,15 @@ const changeSlide = direction => {
 	if (count < 1) { count = slideLeft.length; } // *** if reached first go to last one *** //
 
   let bgColor = document.querySelector('.left-slide .pic:nth-child('+(count)+')').getAttribute("data-bgcolor");
-
+/*
   let listOfClass = document.body.classList;
   for(let i=0; i<listOfClass.length; i++)
   {
     document.body.classList.remove(listOfClass[i]);
   }
   document.body.classList.add(bgColor);
-	
+*/
+	document.body.style.backgroundColor = bgColor;
 	slideLeft[count-1].classList.add("in"+direction);
 	slideRight[count-1].classList.add("rightin"+direction);
   
