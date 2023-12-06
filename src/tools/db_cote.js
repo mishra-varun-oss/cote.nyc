@@ -1,9 +1,14 @@
+const path = require('path');
 const mysql = require('mysql');
 
+const configs = require(path.join(__dirname, "./configs.js"));
+
+require('dotenv').config(configs.src_path);
+
 const connection = mysql.createConnection({
-	host:'127.0.0.1',
-	user:'landing_page',
-	password:'adonsinEOIN12#9)',
+	host:process.env.MYSQL_HOSTNAME,
+	user:process.env.MYSQL_COTE_USERNAME,
+	password:process.env.MYSQL_COTE_PASSWORD,
 	database:'cote'
 });
 

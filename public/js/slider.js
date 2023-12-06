@@ -1,6 +1,7 @@
+get_all_slides();
 const sliderContainer = document.querySelector('.slider-container');
-const slideRight = document.querySelectorAll('.right-slide .pic');
-const slideLeft = document.querySelectorAll('.left-slide .pic');
+const slideRight = document.getElementsByClassName('pic right-side');
+const slideLeft = document.getElementsByClassName('pic left-side');
 
 const upButton = document.querySelector('.up-button');
 const downButton = document.querySelector('.down-button');
@@ -13,7 +14,6 @@ var deleteLink = document.querySelectorAll('.delete');
 let count 	= 1
 	
 const changeSlide = direction => {
-
   direction = (direction == "up" ? 'right' : 'left')
 	slideLeft.forEach(function(photo){
 		photo.classList.remove("outleft");	
@@ -59,9 +59,9 @@ const interval = setInterval(function() {
   changeSlide('up')
 }, 10000);
 // Auto slide end
-
-document.querySelectorAll('.left-slide .pic').forEach(input => input.addEventListener('click',function(){ changeSlide('down') }));
-document.querySelectorAll('.right-slide .pic').forEach(input => input.addEventListener('click',function(){ changeSlide('up') }));
+//
+//slideLeft.forEach(input => input.addEventListener('click',function(){ changeSlide('down') }));
+//slideRight.forEach(input => input.addEventListener('click',function(){ changeSlide('up') }));
 
 
 

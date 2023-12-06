@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Cote.nyc</title>
+	<link rel="stylesheet" type="text/css" href="/css/slider.css">
+	<script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
+	<style>
+		body {
+			margin: 0;
+		}
+		#container {
+			width: 100%;
+			height: 100%;
+		}
+	</style>
+</head>
+<body>
+
+	<div id="app">
+		<div id="container" class="slideOne">
+			<main class="main">
+				<div class="page-wrap">
+					<div id="home-slider">		
+						<div class="slider-container" >
+							<div class="left-slide" id="left-slide">
+							</div>
+							<div class="right-slide" id="right-slide">
+							</div>
+						</div>		
+					</div>
+				</div>
+			</main>
+		</div>
+	</div>
+
+	<script>
+		new Vue({
+			el: '#app', // Mount the Vue instance to the element with id 'app'
+			data: {
+			}
+		});
+	</script>
+
+</body>
+</html>

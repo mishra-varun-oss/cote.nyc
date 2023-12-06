@@ -3,6 +3,7 @@ const path = require('path');
 const express = require('express');
 const multer = require('multer');
 const sharp = require('sharp');
+const cors = require('cors');
 
 const router = express.Router();
 
@@ -14,36 +15,7 @@ const multer_config = require(path.join(__dirname, "../tools/multer_config.js"))
 const storage = multer.diskStorage(multer_config);
 const upload = multer({ storage: storage });
 
-router.use(authorize.login_check);
-
-router.get('/', (req, res) => {
-	res.render('panel', { username: req.session.username });
-})
-
-router.post('/create_slide', upload.single('file'), (req, res) => {
-	let image_path = path.join(__dirname, `../../public/images/${req.file.originalname}`);
-	let image_id = utils.generate_string(7);
-	let output_directory = path.join(__dirname, `../../public/images/${image_id}`);
-	fs.mkdir(output_directory, (err) => {
-		if (err) throw err;
-		utils.new_slide_no()
-		.then(result => { 
-			let output_image_path = path.join(__dirname, `../../public/images/${image_id}/${image_id}_original`);
-			fs.rename(image_path, output_image_path, (err) => {
-				if (err) throw err;
-				let q = `INSERT INTO images VALUES (default, ${result}, '${image_id}', '${req.body.side}', '${req.body.slide_color}', 'MPENGS')`;
-				db.query(q, (err, results) => {
-					if (err) throw err;
-					
-					utils.resize_image(output_image_path, image_id)
-					.then((result) => {
-						res.send({ success: true })
-					})
-				})
-			})
-		})
-	})
-})
+router.use(cors({ origin: ['https://irzaw.com', 'https://www.irzaw.com'] }));
 
 router.post('/replace_image', upload.single('file'), (req, res) => {
 	let image_path = path.join(__dirname, `../../public/images/${req.file.originalname}`);
@@ -70,13 +42,45 @@ router.get('/get_slide_data', (req, res) => {
 		if (err) throw err;
 		utils.group_slides(results)
 		.then((slides) => {
-			console.log(slides);
+//			console.log(slides);
 			res.send({ success: true, data: slides });
 		})
 		.catch((error) => {
 			console.error(error)
 		})
 	})
+})
+
+
+router.post('/create_slide', upload.single('file'), (req, res) => {
+	let image_path = path.join(__dirname, `../../public/images/${req.file.originalname}`);
+	let image_id = utils.generate_string(7);
+	let output_directory = path.join(__dirname, `../../public/images/${image_id}`);
+	fs.mkdir(output_directory, (err) => {
+		if (err) throw err;
+		utils.new_slide_no()
+		.then(result => { 
+			let output_image_path = path.join(__dirname, `../../public/images/${image_id}/${image_id}_original`);
+			fs.rename(image_path, output_image_path, (err) => {
+				if (err) throw err;
+				let q = `INSERT INTO images VALUES (default, ${result}, '${image_id}', '${req.body.side}', '${req.body.slide_color}', 'MPENGS')`;
+				db.query(q, (err, results) => {
+					if (err) throw err;
+					
+					utils.resize_image(output_image_path, image_id)
+					.then((result) => {
+						res.send({ success: true })
+					})
+				})
+			})
+		})
+	})
+})
+
+router.use(authorize.login_check);
+
+router.get('/', (req, res) => {
+	res.render('panel', { username: req.session.username });
 })
 
 module.exports = router;
